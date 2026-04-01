@@ -7,6 +7,7 @@ const { runPipeline } = require('./pipeline');
 const app = express();
 const PORT = process.env.PORT || 5001;
 const CRON_SCHEDULE = process.env.CRON_SCHEDULE || '0 9 * * *';
+const API_KEY = process.env.API_KEY;
 
 // Health endpoint — UptimeRobot pings this to keep Render awake
 app.get('/health', (_req, res) => {
@@ -14,7 +15,10 @@ app.get('/health', (_req, res) => {
 });
 
 // Manual trigger endpoint — useful for testing without waiting for the cron
-app.get('/run', async (_req, res) => {
+app.get('/run', async (req, res) => {
+  if (API_KEY && req.query.key !== API_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
   console.log('[/run] Manual pipeline trigger');
   try {
     const result = await runPipeline();
