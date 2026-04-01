@@ -1,0 +1,17 @@
+{
+  "name": "free-user-outreach-api",
+  "version": "1.0.0",
+  "description": "Queries BigQuery for free-tier AI credit users and pushes net-new leads to Clay webhook",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "@google-cloud/bigquery": "^7.9.1",
+    "@supabase/supabase-js": "^2.47.3",
+    "dotenv": "^17.3.1",
+    "express": "^4.21.2",
+    "node-cron": "^3.0.3"
+  }
+}
